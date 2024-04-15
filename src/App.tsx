@@ -9,6 +9,7 @@ import withReactContent from 'sweetalert2-react-content'
 const noti = withReactContent(Swal);
 
 function App() {
+  const baseUrl = import.meta.env.VITE_BAKCEND_URL;
   const [nombre, setNombre] = useState('');
   const [edad, setEdad] = useState<number | null>(null);
   const [pais, setPais] = useState('');
@@ -20,7 +21,7 @@ function App() {
 
   const agregarDatos = () => {
     //url, cuerpo
-    Axios.post('http://localhost:3001/api/empleados/create', {
+    Axios.post(`${baseUrl}/api/empleados/create`, {
       nombre: nombre,
       edad: edad,
       pais: pais,
@@ -48,7 +49,7 @@ function App() {
 
   const actualizarDatos = () => {
     //url, cuerpo
-    Axios.put('http://localhost:3001/api/empleados/updateEmpleados', {
+    Axios.put(`${baseUrl}/api/empleados/updateEmpleados`, {
       id: id,
       nombre: nombre,
       edad: edad,
@@ -81,7 +82,7 @@ function App() {
     }).then(result => {
       if (result.isConfirmed) {
         //url, cuerpo
-        Axios.delete(`http://localhost:3001/api/empleados/deleteEmpleados/${val.id}`)
+        Axios.delete(`${baseUrl}/api/empleados/deleteEmpleados/${val.id}`)
           .then(() => {
             getEmpleados();
             limpiarCampos();
@@ -132,7 +133,7 @@ function App() {
   }
 
   const getEmpleados = () => {
-    Axios.get<Empleado[]>('http://localhost:3001/api/empleados/listarEmpleados')
+    Axios.get<Empleado[]>(`${baseUrl}/api/empleados/listarEmpleados`)
       .then((response) => {
         setListaEmpleados(response.data);
       });
