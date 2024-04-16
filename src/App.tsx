@@ -22,7 +22,14 @@ function App() {
   const getEmpleados = () => {
     Axios.get<Empleado[]>(`${baseUrl}/api/empleados/listarEmpleados`)
       .then((response) => {
-        setListaEmpleados(response.data);
+        if (Array.isArray(response.data)) {
+          setListaEmpleados(response.data);
+        } else {
+          console.error('La respuesta del servidor no es un array válido:', response.data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error al obtener la lista de empleados:', error);
       });
   }
 
