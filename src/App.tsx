@@ -19,6 +19,13 @@ function App() {
   const [listaEmpleados, setListaEmpleados] = useState<Empleado[]>([]);
   const [editarEmpleado, setEditarEmpleado] = useState(false);
 
+  const getEmpleados = () => {
+    Axios.get<Empleado[]>(`${baseUrl}/api/empleados/listarEmpleados`)
+      .then((response) => {
+        setListaEmpleados(response.data);
+      });
+  }
+
   const agregarDatos = () => {
     //url, cuerpo
     Axios.post(`${baseUrl}/api/empleados/create`, {
@@ -130,13 +137,6 @@ function App() {
     setPais(val.pais);
     setAnios(val.anios);
     setId(val.id);
-  }
-
-  const getEmpleados = () => {
-    Axios.get<Empleado[]>(`${baseUrl}/api/empleados/listarEmpleados`)
-      .then((response) => {
-        setListaEmpleados(response.data);
-      });
   }
 
   getEmpleados(); // ejecutar al cargar la página para cargar los empleados al estado inicial de la aplicación.
